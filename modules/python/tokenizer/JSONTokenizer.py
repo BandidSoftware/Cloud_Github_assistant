@@ -2,11 +2,7 @@ import tokenize
 from io import BytesIO
 
 class JSONTokenizer:
-    def __init__(self):
-        self.metadata = None
-        self.code = None
-
-    def set_input(self, metadata, code):
+    def __init__(self, metadata, code):
         self.metadata = metadata
         self.code = code
 
