@@ -9,8 +9,8 @@ if __name__ == "__main__":
     json_reader = JSONReader(folder=json_folder)
     metadata, content = json_reader.read_json(json_file_name)
 
-    tokenizer = JSONTokenizer()
-    actual_output = tokenizer.tokenize_json(metadata, content)
+    tokenizer = JSONTokenizer().set_input(metadata, content)
+    actual_output = tokenizer.tokenize_json()
     print(actual_output)
 
 

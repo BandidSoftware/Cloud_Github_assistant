@@ -5,7 +5,7 @@ import os
 
 
 class JSONReader:
-    def __init__(self, folder="."):
+    def __init__(self, folder):
         self.base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", folder))  # Modificación aquí
 
     def read_json(self, file_name):
