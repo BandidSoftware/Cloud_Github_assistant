@@ -1,0 +1,12 @@
+{
+    "source": ["aws.lambda"],
+    "detail-type": ["Event describing a code token"],
+    "detail": {
+        "token-name": [{ "exists": true }],
+        "type": [{ "exists": true }],
+        "lenguaje": [{ "exists": true }],
+        "proyect": [{ "exists": true }],
+        "file": [{ "exists": true }],
+        "user": [{ "exists": true }]
+    }
+}

@@ -17,6 +17,10 @@ aws iam create-role --role-name "service-role" --assume-role-policy-document "fi
 aws iam attach-role-policy --role-name "service-role" --policy-arn "arn:aws:iam::000000000000:policy/service-execution-policy"
 
 aws lambda create-function --cli-input-json file://setup/service.token-analyser.json --code S3Bucket=gitRadar-artifacts,S3Key= #El codigo cuando lo tengamos
+aws lambda create-function --cli-input-json file://setup/service.code-file-getter.json --code S3Bucket=gitRadar-artifacts,S3Key= #El codigo cuando lo tengamos
+aws lambda create-function --cli-input-json file://setup/service.token-analyser.json --code S3Bucket=gitRadar-artifacts,S3Key= #El codigo cuando lo tengamos
+
+
 #Resto de lambas las que sea q haya
 # lambda que meta los datos externos pa entro
 
