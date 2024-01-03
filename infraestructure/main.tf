@@ -10,4 +10,8 @@ module "databases" {
   clients_table_name  = "git-radar-clients"
 }
 
+module "queues" {
+  source       = "./modules/queues"
+}
+
 #Definir resto de infraestructura

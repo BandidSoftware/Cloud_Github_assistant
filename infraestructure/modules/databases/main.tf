@@ -1,4 +1,4 @@
-resource "aws_dynamodb_table" "datamart" {
+resource "aws_dynamodb_table" "tokens-datamart" {
   name           = var.datamart_table_name
   billing_mode   = "PAY_PER_REQUEST" #Cambiar según necesidades del cliente
   hash_key       = "token_id"
