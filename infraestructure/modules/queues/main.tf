@@ -1,5 +1,5 @@
-resource "aws_sqs_queue" "queue_artifacts" {
-  name                      = "SQS-CRUD-artifacts"
+resource "aws_sqs_queue" "queue_buckets" {
+  name                      = "SQS-CRUD-buckets"
   delay_seconds             = 90
   max_message_size          = 2048
   message_retention_seconds = 86400
@@ -7,35 +7,8 @@ resource "aws_sqs_queue" "queue_artifacts" {
   # Otras configuraciones según tus necesidades
 }
 
-resource "aws_sqs_queue" "queue_code_files" {
-  name                      = "SQS-CRUD-code-files"
-  delay_seconds             = 90
-  max_message_size          = 2048
-  message_retention_seconds = 86400
-  visibility_timeout_seconds = 30
-  # Otras configuraciones según tus necesidades
-}
-
-resource "aws_sqs_queue" "queue_datalake" {
-  name                      = "SQS-CRUD-datalake"
-  delay_seconds             = 90
-  max_message_size          = 2048
-  message_retention_seconds = 86400
-  visibility_timeout_seconds = 30
-  # Otras configuraciones según tus necesidades
-}
-
-resource "aws_sqs_queue" "queue_tokens" {
-  name                      = "SQS-CRUD-tokens"
-  delay_seconds             = 90
-  max_message_size          = 2048
-  message_retention_seconds = 86400
-  visibility_timeout_seconds = 30
-  # Otras configuraciones según tus necesidades
-}
-
-resource "aws_sqs_queue" "queue_clients" {
-  name                      = "SQS-CRUD-clients"
+resource "aws_sqs_queue" "queue_databases" {
+  name                      = "SQS-CRUD-DBS"
   delay_seconds             = 90
   max_message_size          = 2048
   message_retention_seconds = 86400
