@@ -1,0 +1,11 @@
+{
+    "source": ["la lambda q sea q lo haga"],
+    "detail-type": ["databaseOperation"],
+    "detail": {
+      "operation": { "type": "string" },
+      "database": { "type": "string" },
+      "entry": { "type": "string" },
+      "additionalData": { "type": "object" }
+    }
+  }
+  

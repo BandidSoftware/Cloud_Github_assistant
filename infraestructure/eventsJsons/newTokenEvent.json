@@ -1,0 +1,9 @@
+{
+    "source": ["la lambda"],
+    "detail-type": ["newTokenEvent"],
+    "detail": {
+      "clientId": { "type": "string" },
+      "token": { "type": "string" }
+    }
+  }
+  
