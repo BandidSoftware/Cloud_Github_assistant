@@ -4,7 +4,7 @@
     "detail": {
       "operation": { "type": "string" },
       "database": { "type": "string" },
-      "entry": { "type": "string" },
+      "id": { "type": "string" },
       "additionalData": { "type": "object" }
     }
   }
