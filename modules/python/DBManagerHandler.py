@@ -1,6 +1,6 @@
 import json
 
-from DynamoDBManager import DynamoDBManager
+from DBManagers import DynamoDBManager
 
 
 def dbManagerhandler(event, context):
