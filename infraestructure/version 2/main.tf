@@ -13,6 +13,12 @@ module "Databases" {
   environment = "dev"
 }
 
-module "" {
-  source = ""
+module "policies" {
+  source = "modules/policies"
+  environment = "dev"
+}
+
+module "Rols" {
+  source = "modules/rols"
+  environment = "dev"
 }
