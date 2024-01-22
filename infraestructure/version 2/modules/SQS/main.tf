@@ -1,30 +1,23 @@
 resource "aws_sqs_queue" "deadletter-queque" {
   name = "git-radar-deadletter-queque"
-
-  redrive_policy = jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.terraform_queue_deadletter.arn
-    maxReceiveCount     = 4
-  })
-}
-
-resource "aws_sqs_queue" "terraform_queue_deadletter" {
-  name = "terraform-example-deadletter-queue"
 }
 
 resource "aws_sqs_queue_redrive_allow_policy" "terraform_queue_redrive_allow_policy" {
-  queue_url = aws_sqs_queue.terraform_queue_deadletter.id
+  queue_url = aws_sqs_queue.deadletter-queque.id
 
   redrive_allow_policy = jsonencode({
     redrivePermission = "byQueue",
-    sourceQueueArns   = [aws_sqs_queue.database-operations.arn, ]
+    sourceQueueArns   = [aws_sqs_queue.sugestion-requests.arn,
+                          aws_sqs_queue.user-operations.arn,
+                          aws_sqs_queue.metrics-requests.arn]
   })
 }
 
-resource "aws_sqs_queue" "database-operations" {
-  name = "git-radar-database-operations"
+resource "aws_sqs_queue" "sugestion-requests" {
+  name = "git-radar-sugestion-requests"
   fifo_queue = "true"
   redrive_policy = jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.terraform_queue_deadletter.arn
+    deadLetterTargetArn = aws_sqs_queue.deadletter-queque.arn
     maxReceiveCount     = 4
   })
 
@@ -37,7 +30,7 @@ resource "aws_sqs_queue" "user-operations" {
   name = "git-radar-user-operations"
   fifo_queue = "true"
   redrive_policy = jsonencode({
-    deadLetterTargetArn = aws_sqs_queue.terraform_queue_deadletter.arn
+    deadLetterTargetArn = aws_sqs_queue.deadletter-queque.arn
     maxReceiveCount     = 4
   })
 
@@ -46,3 +39,15 @@ resource "aws_sqs_queue" "user-operations" {
   }
 }
 
+resource "aws_sqs_queue" "metrics-requests" {
+  name = "git-radar-metrics-requests"
+  fifo_queue = "true"
+  redrive_policy = jsonencode({
+    deadLetterTargetArn = aws_sqs_queue.deadletter-queque.arn
+    maxReceiveCount     = 4
+  })
+
+  tags = {
+    Enviroment = var.environment
+  }
+}

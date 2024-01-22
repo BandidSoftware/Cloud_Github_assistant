@@ -5,4 +5,5 @@ module "buckets" {
 
 module "SQS" {
   source = "modules/SQS"
+  environment = "dev"
 }
