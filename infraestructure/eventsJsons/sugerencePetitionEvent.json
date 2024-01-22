@@ -1,9 +1,0 @@
-{
-    "source": ["la lambda en cuestion"],
-    "detail-type": ["sugerencePetitionEvent"],
-    "detail": {
-      "context": { "type": "string"  },
-      "clientId": { "type": "string" }
-    }
-}
-  

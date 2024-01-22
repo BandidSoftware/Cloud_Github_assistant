@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "datalake" {
   bucket = "${var.bucket_prefix}-datalake"
-  acl    = "private"
 
   tags = {
     Name        = "${var.bucket_prefix}-datalake"
@@ -10,7 +9,6 @@ resource "aws_s3_bucket" "datalake" {
 
 resource "aws_s3_bucket" "code_files" {
   bucket = "${var.bucket_prefix}-code-files"
-  acl    = "private"
 
   tags = {
     Name        = "${var.bucket_prefix}-code-files"
@@ -20,7 +18,6 @@ resource "aws_s3_bucket" "code_files" {
 
 resource "aws_s3_bucket" "artifacts" {
   bucket = "${var.bucket_prefix}-artifacts"
-  acl    = "private"
 
   tags = {
     Name        = "${var.bucket_prefix}-artifacts"
