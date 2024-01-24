@@ -4,9 +4,6 @@
       {
         "Effect": "Allow",
         "Action": [
-          "sqs:SendMessage",
-          "sqs:ReceiveMessage",
-          "sqs:DeleteMessage",
           "dynamodb:Scan",
           "dynamodb:GetItem",
           "dynamodb:PutItem",

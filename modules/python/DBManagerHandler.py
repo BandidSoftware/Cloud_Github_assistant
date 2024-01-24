@@ -34,7 +34,7 @@ def dbManagerhandler(event, context):
         'body': json.dumps({'response': response})
     }
 
-
+#todo quitar region (se pasa como variable de entorno)
 def parse_event(event):
     operation = event.get('operation', '')
     data = event.get('data', {})
