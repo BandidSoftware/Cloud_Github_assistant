@@ -21,5 +21,4 @@ module "userManager" {
   source = "modules/userManager"
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
-
 }
