@@ -6,6 +6,7 @@ module "role_creation"{
   source = "role_creation"
   environment = var.environment
   code_files_bucket = aws_s3_bucket.code_files.arn
+  eventBus_arn = var.eventBus_arn
 }
 
 resource "aws_lambda_function" "tokenizer" {
