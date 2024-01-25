@@ -6,3 +6,7 @@ variable "environment" {
 variable "eventBus_arn" {
   name = "eventBus-arn"
 }
+
+variable "eventBus_name" {
+  name = "eventBus-name"
+}
