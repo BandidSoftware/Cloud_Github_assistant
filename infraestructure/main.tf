@@ -28,3 +28,8 @@ module "userManager" {
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
 }
+
+module "apiGateWay" {
+  source = "modules/apiGateWay"
+  stage = "test"
+}

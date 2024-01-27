@@ -1,5 +1,5 @@
 module "databases_creation" {
-  source = "./databases_creation"
+  source = "databases_creation"
   environment = var.environment
 }
 
