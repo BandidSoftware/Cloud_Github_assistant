@@ -15,10 +15,8 @@ module "sugestion_endpoint" {
   api_rest_parent = aws_api_gateway_rest_api.front.root_resource_id
 }
 
-module "users_endpoint" {
-  source = "users_endpoint"
-  api_rest = aws_api_gateway_rest_api.front.id
-  api_rest_parent = aws_api_gateway_rest_api.front.root_resource_id
+module "" {
+  source = ""
 }
 resource "aws_api_gateway_method" "get_suggestion" {
   authorization = "NONE"
