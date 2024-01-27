@@ -17,6 +17,12 @@ module "tokenizer" {
   eventBus_name = module.EventBridge_Datalake.eventBus_name
 }
 
+module  "metrics"{
+  source = "modules/metrics"
+  environment = var.environment
+  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+}
+
 module "userManager" {
   source = "modules/userManager"
   environment = var.environment

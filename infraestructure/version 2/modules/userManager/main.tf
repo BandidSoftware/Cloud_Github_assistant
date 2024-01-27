@@ -7,5 +7,7 @@ module "rol_creation" {
 resource "aws_lambda_function" "user_manager" {
   function_name = "user-manager"
   role          = module.rol_creation.role_arn
-  handler = //todo configurar cuando despliegues
+  handler =  //todo configurar cuando despliegues
 }
+
+//todo montar las operaciones de usuario
