@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "code_files" {
 }
 
 module "role_creation"{
-  source = "role_creation"
+  source = "./role_creation"
   environment = var.environment
   code_files_bucket = aws_s3_bucket.code_files.arn
   eventBus_arn = var.eventBus_arn
@@ -12,19 +12,14 @@ module "role_creation"{
 resource "aws_lambda_function" "tokenizer" {
   function_name = "tokenizer"
   role          = module.role_creation.role_arn
-  handler = "" //todo despliegue
-}
-
-resource "aws_lambda_permission" "allow_api_invoke" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.tokenizer.function_name
-  principal     = "apigateway.amazonaws.com"
+  runtime = "python3.8"
+  handler = "testLambda.lambda_handler" //todo despliegue
+  filename = "./code/testLambda.zip"
 }
 
 resource "aws_lambda_permission" "s3_event_permision" {
   statement_id = "AllowExecutionFromS3"
-  action = "lambda::InvokeFunction"
+  action = "lambda:InvokeFunction"
   function_name = aws_lambda_function.tokenizer.function_name
   principal     = "s3.amazonaws.com"
   source_arn = aws_s3_bucket.code_files.arn

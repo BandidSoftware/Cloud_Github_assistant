@@ -1,5 +1,5 @@
 module "role_creation" {
-  source = "role_creation"
+  source = "./role_creation"
   environment = var.environment
   eventBus_arn = var.eventBus_arn
 }
@@ -7,10 +7,13 @@ module "role_creation" {
 resource "aws_lambda_function" "metrics" {
   function_name = "metrics"
   role          = module.role_creation.role_arn
-  handler = //todo esperar al despliegue como no
+  runtime = "python3.8"
+  handler = "testLambda.lambda_handler" //todo despliegue
+  filename = "./code/testLambda.zip"
+
 }
 
-resource "aws_lambda_permission" "allow_api_invoke" {
+resource "aws_lambda_permission" "allow_api_invoke_metrics" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.metrics.function_name
