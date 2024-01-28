@@ -1,17 +1,45 @@
-module "buckets" {
-    source = "./modules/buckets"
-    bucket_prefix = "git-radar"
-    environment = "dev"
+module "EventBridge_Datalake" {
+  source = "modules/eventBridge"
+  environment = var.environment
 }
 
-module "databases" {
-  source              = "./modules/databases"
-  datamart_table_name = "git-radar-datamart"
-  clients_table_name  = "git-radar-clients"
+module "Database_Manager" {
+  source = "modules/databaseManager"
+  environment = var.environment
+  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+  eventBus_name = module.EventBridge_Datalake.eventBus_name
 }
 
-module "queues" {
-  source       = "./modules/queues"
+module "tokenizer" {
+  source = "modules/tokenizer"
+  environment = var.environment
+  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+  eventBus_name = module.EventBridge_Datalake.eventBus_name
 }
 
-#Definir resto de infraestructura
+module  "metrics"{
+  source = "modules/metrics"
+  environment = var.environment
+  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+}
+
+module "userManager" {
+  source = "modules/userManager"
+  environment = var.environment
+  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+}
+
+module "sugester" {
+  source = "modules/sugester"
+  environment = var.environment
+  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+}
+
+module "apiGateWay" {
+  source = "modules/apiGateWay"
+  stage = "test"
+  metrics_lambda = module.metrics.metrics_lambda
+  tokenizer_lambda = module.tokenizer.tokenizer_lambda
+  userOperations_lambda = module.userManager.userManager_lambda
+  sugester_lambda = module.sugester.get_sugestion_lambda
+}
