@@ -3,12 +3,14 @@ module "EventBridge_Datalake" {
   environment = var.environment
 }
 
+
 module "Database_Manager" {
   source = "modules/databaseManager"
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
   eventBus_name = module.EventBridge_Datalake.eventBus_name
 }
+
 
 module "tokenizer" {
   source = "modules/tokenizer"
@@ -32,4 +34,6 @@ module "userManager" {
 module "apiGateWay" {
   source = "modules/apiGateWay"
   stage = "test"
+  metrics_lambda = module.metrics.metrics_lambda
+  tokenizer_lambda = module.tokenizer.tokenizer_lambda
 }
