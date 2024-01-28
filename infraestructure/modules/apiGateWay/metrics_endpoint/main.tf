@@ -5,6 +5,8 @@ variable "api_rest_parent" {
   name = "api_rest_parent"
 }
 
+variable "metrics_lambda" {}
+
 resource "aws_api_gateway_resource" "metrics_endpoint" {
   parent_id   = var.api_rest_parent
   path_part   = "metrics"
@@ -17,6 +19,15 @@ resource "aws_api_gateway_method" "get_metrics" {
   http_method = "GET"
   resource_id = aws_api_gateway_resource.metrics_endpoint.id
   rest_api_id = var.api_rest
+}
+
+resource "aws_api_gateway_integration" "lambda_integration" {
+  http_method = aws_api_gateway_method.get_metrics.http_method
+  resource_id = aws_api_gateway_resource.metrics_endpoint.id
+  rest_api_id = var.api_rest
+  type        = "AWS_PROXY"
+  uri = var.metrics_lambda.invoke_arn
+  depends_on = [var.metrics_lambda]
 }
 
 output "endpoint" {

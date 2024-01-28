@@ -15,6 +15,13 @@ resource "aws_lambda_function" "tokenizer" {
   handler = "" //todo despliegue
 }
 
+resource "aws_lambda_permission" "allow_api_invoke" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.tokenizer.function_name
+  principal     = "apigateway.amazonaws.com"
+}
+
 resource "aws_lambda_permission" "s3_event_permision" {
   statement_id = "AllowExecutionFromS3"
   action = "lambda::InvokeFunction"

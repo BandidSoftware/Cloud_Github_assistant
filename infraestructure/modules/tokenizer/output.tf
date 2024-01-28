@@ -3,5 +3,5 @@ output "code_files_s3_arn" {
 }
 
 output "tokenizer_lambda" {
-  value = aws_lambda_function.tokenizer.arn
+  value = aws_lambda_function.tokenizer
 }
