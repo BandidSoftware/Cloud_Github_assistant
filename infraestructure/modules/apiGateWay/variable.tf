@@ -11,6 +11,8 @@ variable "metrics_lambda" {
   name = "metrics-lambda"
 }
 
-variable "sugester-lambda" {
+variable "sugester_lambda" {
   name = "sugester-lambda"
-} //
+}
+
+variable "userOperations_lambda" {}
