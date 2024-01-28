@@ -10,4 +10,9 @@ resource "aws_lambda_function" "user_manager" {
   handler =  //todo configurar cuando despliegues
 }
 
-//todo montar las operaciones de usuario
+resource "aws_lambda_permission" "allow_api_invoke" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.user_manager.function_name
+  principal     = "apigateway.amazonaws.com"
+}
