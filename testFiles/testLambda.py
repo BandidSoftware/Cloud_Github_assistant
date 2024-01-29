@@ -1,9 +1,13 @@
+import json
+
+
 def lambda_handler(event, context):
     # Imprimir el evento recibido
-    print("Evento recibido:", event)
+    print("Evento recibido:")
+    print(json.dumps(event))
 
-    # Devolver una respuesta (opcional)
+    # Retorna algo si es necesario
     return {
         'statusCode': 200,
-        'body': 'Evento recibido correctamente'
+        'body': json.dumps('¡Función Lambda ejecutada exitosamente!')
     }

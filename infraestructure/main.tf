@@ -3,41 +3,44 @@ module "EventBridge_Datalake" {
   environment = var.environment
 }
 
-module "Database_Manager" {
-  source = "./modules/databaseManager"
-  environment = var.environment
-  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
-  eventBus_name = module.EventBridge_Datalake.eventBus_name
-}
+//module "Database_Manager" {
+//  source = "./modules/databaseManager"
+//  environment = var.environment
+//  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+//  eventBus_name = module.EventBridge_Datalake.eventBus_name
+//}
 
 module "tokenizer" {
   source = "./modules/tokenizer"
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+  eventBus_name = module.EventBridge_Datalake.eventBus_name
+  depends_on = [module.EventBridge_Datalake]
 }
 
 module  "metrics"{
   source = "./modules/metrics"
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
-}
-
-module "userManager" {
-  source = "./modules/userManager"
-  environment = var.environment
-  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+  depends_on = [module.EventBridge_Datalake]
 }
 
 module "sugester" {
   source = "./modules/sugester"
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
+  depends_on = [module.EventBridge_Datalake]
 }
 
 module "apiGateWay" {
   source = "./modules/apiGateWay"
   stage = "test"
   metrics_lambda = module.metrics.metrics_lambda
-  userOperations_lambda = module.userManager.userManager_invoke
   sugester_lambda = module.sugester.get_sugestion_lambda
+}
+
+resource "aws_api_gateway_deployment" "deploy_api" {
+  depends_on = [module.sugester, module.metrics, module.tokenizer]
+  rest_api_id = module.apiGateWay.api_rest_id
+  stage_name = "test"
 }

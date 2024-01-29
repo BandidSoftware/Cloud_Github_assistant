@@ -7,6 +7,35 @@ module "role_creation"{
   environment = var.environment
   code_files_bucket = aws_s3_bucket.code_files.arn
   eventBus_arn = var.eventBus_arn
+  lambda_function_name = "tokenizer"
+}
+
+resource "aws_cloudwatch_log_group" "function_log_group" {
+  name              = "/aws/lambda/${aws_lambda_function.tokenizer.function_name}"
+  retention_in_days = 7
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+resource "aws_iam_role_policy" "function_logging_policy" {
+  name   = "function-logging-policy"
+  role = module.role_creation.role_id
+
+  depends_on = [module.role_creation]
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
 }
 
 resource "aws_lambda_function" "tokenizer" {
@@ -15,21 +44,26 @@ resource "aws_lambda_function" "tokenizer" {
   runtime = "python3.8"
   handler = "testLambda.lambda_handler" //todo despliegue
   filename = "./code/testLambda.zip"
+  publish = true
+  environment {
+    //Aqui pones variables de entorno mamawebo
+  }
 }
 
-resource "aws_lambda_permission" "s3_event_permision" {
-  statement_id = "AllowExecutionFromS3"
-  action = "lambda:InvokeFunction"
+resource "aws_lambda_permission" "tokenizer_allow_s3" {
+  action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.tokenizer.function_name
   principal     = "s3.amazonaws.com"
   source_arn = aws_s3_bucket.code_files.arn
 }
 
-resource "aws_s3_bucket_notification" "upload_notification" {
-  bucket = aws_s3_bucket.code_files.bucket
-
+resource "aws_s3_bucket_notification" "code_files_notification" {
+  bucket = aws_s3_bucket.code_files.id
+  eventbridge = true
   lambda_function {
+    events = ["s3:ObjectCreated:*"]
     lambda_function_arn = aws_lambda_function.tokenizer.arn
-    events = ["s3::ObjectCreated:*"]
+    filter_suffix = ".py" //Solo se activa con archivos .py
   }
+  depends_on = [aws_lambda_function.tokenizer]
 }
