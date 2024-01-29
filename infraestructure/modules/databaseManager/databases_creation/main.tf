@@ -1,6 +1,6 @@
 resource "aws_dynamodb_table" "tokens" {
   hash_key = "user-id"
-  range_key = "file-id"
+  range_key = "file-name"
   name     = "git-radar-tokens"
 
   attribute {

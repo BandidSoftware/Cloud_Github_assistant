@@ -11,12 +11,14 @@ class DynamoDBManager:
         response = self.table.put_item(Item=item)
         print('Item added:', response)
 
-    def retrieve_item(self, id):
-        key = {'ID': id}
+    def retrieve_item(self, user_id, file_name):
+        key = {'user-id': user_id, 'file-name': file_name}
+
         response = self.table.get_item(Key=key)
         item = response.get('Item')
+
         if item:
-            print('Retrieved item: ', item)
+            return item
         else:
             print('Item not found')
 

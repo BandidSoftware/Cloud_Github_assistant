@@ -1,5 +1,4 @@
 import json
-
 from modules.python.tokenize.utils.JSONData import JSONData
 
 
