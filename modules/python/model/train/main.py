@@ -17,11 +17,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
     parser.add_argument('file_path', type=str)
+    parser.add_argument('model_name', type=str)
 
     args = parser.parse_args()
 
-    if args.file_path is None:
+    if args.file_path is None or args.model_name is None:
         print("you must provide the correct parameters.")
     else:
-        main_instance = Main(args.file_path)
-        print(main_instance.main())
+        main_instance = Main(args.file_path, args.model_name)
