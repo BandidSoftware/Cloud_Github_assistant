@@ -10,7 +10,9 @@ class Main():
     def main(self):
         training_data_generator = trainingDataGenerator(self.file_path)
         training_data = training_data_generator.training_data_generator()
-        return training_data
+        #return training_data
+
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
