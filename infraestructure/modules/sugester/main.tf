@@ -12,7 +12,7 @@ resource "aws_lambda_function" "train_sugester" {
   function_name = "train-sugester"
   role          = module.role_creation.role_arn
   runtime = "python3.8"
-  handler = "testLambda.lambda_handler" //todo despliegue
+  handler = "testLambda.lambda_handler"
   filename = "./code/testLambda.zip"
 
 }
@@ -44,7 +44,26 @@ resource "aws_iam_role_policy" "sugester_logging_policy" {
   })
 }
 
-//todo configurar schedule train
+resource "aws_cloudwatch_event_rule" "train_schedule" {
+  name                = "train-schedule"
+  schedule_expression = "cron(0 2 * * ? *)"  # Esta expresión indica que se ejecute a las 2 am UTC todos los días por si quieres cambiar esto pa probarlo
+}
+
+resource "aws_cloudwatch_event_target" "lambda_target" {
+  rule      = aws_cloudwatch_event_rule.train_schedule.name
+  target_id = "target-lambda"
+
+  arn = aws_lambda_function.train_sugester.arn
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.train_sugester.function_name
+  principal     = "events.amazonaws.com"
+
+  source_arn = aws_cloudwatch_event_rule.train_schedule.arn
+}
 
 resource "aws_lambda_function" "get_sugestion" {
   function_name = "get-sugestion"
@@ -52,7 +71,6 @@ resource "aws_lambda_function" "get_sugestion" {
   runtime = "python3.8"
   handler = "testLambda.lambda_handler" //todo despliegue
   filename = "./code/testLambda.zip"
-
 }
 
 resource "aws_lambda_permission" "allow_api_invoke_get_sugestion" {
