@@ -1,13 +1,21 @@
+variable "enviroment" {
+  description = "Wich enviroment is being build"
+}
+variable "eventBus_name" {}
+variable "eventBus_arn" {}
+variable "tokensdb_arn" {}
+
 resource "aws_s3_bucket" "code_files" {
   bucket = "code-files"
 }
 
 module "role_creation"{
   source = "./role_creation"
-  environment = var.environment
-  code_files_bucket = aws_s3_bucket.code_files.arn
+  environment = var.enviroment
   eventBus_arn = var.eventBus_arn
   lambda_function_name = "tokenizer"
+  code_files_bucket = aws_s3_bucket.code_files.arn
+  tokensdb_arn = var.tokensdb_arn
 }
 
 resource "aws_cloudwatch_log_group" "function_log_group" {
@@ -18,10 +26,9 @@ resource "aws_cloudwatch_log_group" "function_log_group" {
   }
 }
 
-resource "aws_iam_role_policy" "function_logging_policy" {
+resource "aws_iam_role_policy" "tokenizer_logging_policy" {
   name   = "function-logging-policy"
   role = module.role_creation.role_id
-
   depends_on = [module.role_creation]
   policy = jsonencode({
     "Version" : "2012-10-17",

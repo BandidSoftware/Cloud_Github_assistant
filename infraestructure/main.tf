@@ -3,26 +3,26 @@ module "EventBridge_Datalake" {
   environment = var.environment
 }
 
-//module "Database_Manager" {
-//  source = "./modules/databaseManager"
-//  environment = var.environment
-//  eventBus_arn = module.EventBridge_Datalake.eventBus_arn
-//  eventBus_name = module.EventBridge_Datalake.eventBus_name
-//}
+module "databases" {
+  source = "modules/databases_creation"
+  enviroment = var.environment
+}
 
 module "tokenizer" {
   source = "./modules/tokenizer"
-  environment = var.environment
+  enviroment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
   eventBus_name = module.EventBridge_Datalake.eventBus_name
-  depends_on = [module.EventBridge_Datalake]
+  tokensdb_arn = module.databases.tokensDB_arn
+  depends_on = [module.EventBridge_Datalake, module.databases]
 }
 
 module  "metrics"{
   source = "./modules/metrics"
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
-  depends_on = [module.EventBridge_Datalake]
+  tokensdb_arn = module.databases.tokensDB_arn
+  depends_on = [module.EventBridge_Datalake, module.databases]
 }
 
 module "sugester" {

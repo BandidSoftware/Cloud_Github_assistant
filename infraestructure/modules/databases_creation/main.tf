@@ -1,6 +1,9 @@
+variable "enviroment" {}
+
 resource "aws_dynamodb_table" "tokens" {
   hash_key = "user-id"
   range_key = "file-id"
+
   name     = "git-radar-tokens"
   billing_mode = "PAY_PER_REQUEST"
 
@@ -15,7 +18,7 @@ resource "aws_dynamodb_table" "tokens" {
   }
 
   tags = {
-    enviroment = var.environment
+    enviroment = var.enviroment
   }
 }
 
@@ -31,7 +34,11 @@ resource "aws_dynamodb_table" "users" {
 
 
   tags = {
-    enviroment = var.environment
+    enviroment = var.enviroment
   }
 
 }
+
+output "tokensDB_arn" {value = aws_dynamodb_table.tokens.arn}
+
+output "usersDB_arn" {value = aws_dynamodb_table.users.arn }

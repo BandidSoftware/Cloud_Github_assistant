@@ -1,3 +1,7 @@
+variable "environment" {
+  description = "Wich enviroment is being build" }
+
+variable "eventBus_arn" {}
 module "role_creation" {
   source = "./role_creation"
   environment = var.environment
@@ -12,6 +16,34 @@ resource "aws_lambda_function" "train_sugester" {
   filename = "./code/testLambda.zip"
 
 }
+
+resource "aws_cloudwatch_log_group" "function_log_group" {
+  name              = "/aws/lambda/sugester"
+  retention_in_days = 7
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+resource "aws_iam_role_policy" "sugester_logging_policy" {
+  name   = "function-logging-policy"
+  role = module.role_creation.role_id
+  depends_on = [module.role_creation]
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Action" : [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "arn:aws:logs:*:*:*"
+      }
+    ]
+  })
+}
+
 //todo configurar schedule train
 
 resource "aws_lambda_function" "get_sugestion" {
@@ -28,4 +60,12 @@ resource "aws_lambda_permission" "allow_api_invoke_get_sugestion" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.get_sugestion.function_name
   principal     = "apigateway.amazonaws.com"
+}
+
+output "train_sugester_lambda" {
+  value = aws_lambda_function.train_sugester.invoke_arn
+}
+
+output "get_sugestion_lambda" {
+  value = aws_lambda_function.get_sugestion.invoke_arn
 }

@@ -1,3 +1,6 @@
+variable "environment" {description = "Wich enviroment is being build"}
+variable "eventBus_arn" {}
+
 resource "aws_iam_role" "sugester_rol" {
   name = "sugester-role"  # Nombre del rol
 
@@ -16,4 +19,8 @@ resource "aws_iam_role" "sugester_rol" {
 
 output "role_arn" {
   value = aws_iam_role.sugester_rol.arn
+}
+
+output "role_id" {
+  value = aws_iam_role.sugester_rol.id
 }
