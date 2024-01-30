@@ -1,8 +1,13 @@
 variable "lambda_function_name" {}
+
 variable "tokensdb_arn" {}
+
 variable "environment" {
-  description = "Wich enviroment is being build" }
+  description = "Wich enviroment is being build"
+}
+
 variable "code_files_bucket" {}
+
 variable "eventBus_arn" {}
 
 resource "aws_iam_role" "tokenizer_rol" {

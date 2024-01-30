@@ -1,5 +1,7 @@
 variable "api_rest" {}
+
 variable "api_rest_parent" {}
+
 variable "metrics_lambda" {}
 
 resource "aws_api_gateway_resource" "metrics_endpoint" {
@@ -24,10 +26,35 @@ resource "aws_api_gateway_integration" "get_metrics_integration" {
   integration_http_method = "GET"
 }
 
+resource "aws_api_gateway_method_response" "get_metrics_response" {
+  http_method = "GET"
+  resource_id = aws_api_gateway_resource.metrics_endpoint.id
+  rest_api_id = var.api_rest
+  status_code = "200"
+  response_models = {} //MODELO DE LAS Respuestas JORGE
+}
+
+//response_models (Optional) A map specifying the model resources used for the response's content type.
+//Response models are represented as a key/value map, with a content type as the key and a Model name as the value.
+//https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/api_gateway_method_response <- documentacion
+
+
+resource "aws_api_gateway_integration_response" "get_metrics_integration_response" {
+  http_method = "GET"
+  resource_id = aws_api_gateway_resource.metrics_endpoint.id
+  rest_api_id = var.api_rest
+  status_code = "200" //vuestra mano
+  response_templates = {}
+}
+
 output "endpoint" {
   value = aws_api_gateway_resource.metrics_endpoint.id
 }
 
 output "get_method" {
   value = aws_api_gateway_method.get_metrics.id
+}
+
+output "integration" {
+  value = aws_api_gateway_integration.get_metrics_integration.id
 }

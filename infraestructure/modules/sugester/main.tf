@@ -1,7 +1,9 @@
 variable "environment" {
-  description = "Wich enviroment is being build" }
+  description = "Wich enviroment is being build"
+}
 
 variable "eventBus_arn" {}
+
 module "role_creation" {
   source = "./role_creation"
   environment = var.environment

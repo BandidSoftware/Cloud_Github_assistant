@@ -1,8 +1,11 @@
 variable "enviroment" {
   description = "Wich enviroment is being build"
 }
+
 variable "eventBus_name" {}
+
 variable "eventBus_arn" {}
+
 variable "tokensdb_arn" {}
 
 resource "aws_s3_bucket" "code_files" {

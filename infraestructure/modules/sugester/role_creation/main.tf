@@ -1,4 +1,7 @@
-variable "environment" {description = "Wich enviroment is being build"}
+variable "environment" {
+  description = "Wich enviroment is being build"
+}
+
 variable "eventBus_arn" {}
 
 resource "aws_iam_role" "sugester_rol" {

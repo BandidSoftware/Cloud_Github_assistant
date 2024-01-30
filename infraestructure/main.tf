@@ -4,7 +4,7 @@ module "EventBridge_Datalake" {
 }
 
 module "databases" {
-  source = "modules/databases_creation"
+  source = "./modules/databases_creation"
   enviroment = var.environment
 }
 
@@ -37,10 +37,5 @@ module "apiGateWay" {
   stage = "test"
   metrics_lambda = module.metrics.metrics_lambda
   sugester_lambda = module.sugester.get_sugestion_lambda
-}
-
-resource "aws_api_gateway_deployment" "deploy_api" {
-  depends_on = [module.sugester, module.metrics, module.tokenizer]
-  rest_api_id = module.apiGateWay.api_rest_id
-  stage_name = "test"
+  environment = var.environment
 }
