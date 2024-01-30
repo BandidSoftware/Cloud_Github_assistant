@@ -11,7 +11,9 @@ class Main():
     def main(self):
         training_data_generator = trainingDataGenerator(self.file_path)
         training_data = training_data_generator.training_data_generator()
-        model(training_data, self.model_name)
+        my_model = model(training_data, self.model_name)
+        my_model.x_y_train()
+        my_model.training()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -25,3 +27,4 @@ if __name__ == "__main__":
         print("you must provide the correct parameters.")
     else:
         main_instance = Main(args.file_path, args.model_name)
+        main_instance.main()
