@@ -1,7 +1,11 @@
+variable "enviroment" {}
+
 resource "aws_dynamodb_table" "tokens" {
   hash_key = "user-id"
   range_key = "file-id"
+
   name     = "git-radar-tokens"
+  billing_mode = "PAY_PER_REQUEST"
 
   attribute {
     name = "user-id"
@@ -9,18 +13,19 @@ resource "aws_dynamodb_table" "tokens" {
   }
 
   attribute {
-    name = "file-name" //Ruta del archivo desde la raiz del proyecto
+    name = "file-id" //Ruta del archivo desde la raiz del proyecto
     type = "S"
   }
 
   tags = {
-    enviroment = var.environment
+    enviroment = var.enviroment
   }
 }
 
 resource "aws_dynamodb_table" "users" {
   hash_key = "user-id"
   name     = "git-radar-users"
+  billing_mode = "PAY_PER_REQUEST"
 
   attribute {
     name = "user-id"
@@ -29,7 +34,11 @@ resource "aws_dynamodb_table" "users" {
 
 
   tags = {
-    enviroment = var.environment
+    enviroment = var.enviroment
   }
 
 }
+
+output "tokensDB_arn" {value = aws_dynamodb_table.tokens.arn}
+
+output "usersDB_arn" {value = aws_dynamodb_table.users.arn }
