@@ -22,6 +22,7 @@ module  "metrics"{
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
   tokensdb_arn = module.databases.tokensDB_arn
+  metricsdb_arn = module.databases.metricsDB_arn
   depends_on = [module.EventBridge_Datalake, module.databases]
 }
 

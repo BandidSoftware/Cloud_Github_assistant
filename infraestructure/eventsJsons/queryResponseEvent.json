@@ -1,8 +1,0 @@
-{
-    "source": ["aws.lambda"],
-    "detail-type": ["queryResponse"],
-    "detail": {
-      "Data": { "type": "string" }
-    }
-  }
-

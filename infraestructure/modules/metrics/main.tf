@@ -3,7 +3,7 @@ variable "environment" {
 }
 
 variable "eventBus_arn" {}
-
+variable "metricsdb_arn" {}
 variable "tokensdb_arn" {}
 
 module "role_creation" {
@@ -11,6 +11,7 @@ module "role_creation" {
   environment = var.environment
   eventBus_arn = var.eventBus_arn
   tokensdb_arn = var.tokensdb_arn
+  metricsdb_arn = var.metricsdb_arn
 }
 
 resource "aws_cloudwatch_log_group" "function_log_group" {

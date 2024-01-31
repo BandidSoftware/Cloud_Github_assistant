@@ -3,7 +3,7 @@ variable "environment" {
 }
 
 variable "eventBus_arn" {}
-
+variable "metricsdb_arn"{}
 variable "tokensdb_arn" {}
 
 resource "aws_iam_role" "metrics_role" {
@@ -17,6 +17,11 @@ resource "aws_iam_role" "metrics_role" {
         Effect   : "Allow",
         Resource : [var.eventBus_arn, var.tokensdb_arn]
 
+      },
+      {
+        Action   = ["dynamodb:Scan", "dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:UpdateItem", "dynamodb:DeleteItem"],
+        Effect   = "Allow",
+        Resource = [var.metricsdb_arn]
       }
     ]
   })

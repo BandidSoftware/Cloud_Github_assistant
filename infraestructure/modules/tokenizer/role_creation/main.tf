@@ -24,7 +24,7 @@ resource "aws_iam_role" "tokenizer_rol" {
      "Sid": ""
       },
       {
-        Action   : ["s3:GetObject", "events:PutEvents", "dy"],
+        Action   : ["s3:GetObject", "events:PutEvents"],
         Effect   : "Allow",
         Resource : [var.code_files_bucket, var.eventBus_arn]
       },
