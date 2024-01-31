@@ -52,8 +52,8 @@ resource "aws_lambda_function" "tokenizer" {
   function_name = "tokenizer"
   role          = module.role_creation.role_arn
   runtime = "python3.8"
-  handler = "testLambda.lambda_handler" //todo despliegue
-  filename = "./code/testLambda.zip"
+  handler = "TokenizerHandler.lambda_handler"
+  filename = "./code/python_tokenizer.zip"
   publish = true
   environment {
     //Aqui pones variables de entorno mamawebo

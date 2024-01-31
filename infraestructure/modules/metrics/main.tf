@@ -44,8 +44,8 @@ resource "aws_lambda_function" "metrics" {
   function_name = "metrics"
   role          = module.role_creation.role_arn
   runtime = "python3.8"
-  handler = "testLambda.lambda_handler" //todo despliegue
-  filename = "./code/testLambda.zip"
+  handler = "MetricsHandler.lambda_handler" //todo despliegue
+  filename = "./code/python_metrics.zip"
 
 }
 

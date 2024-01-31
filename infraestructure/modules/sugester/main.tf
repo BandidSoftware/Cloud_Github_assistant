@@ -14,9 +14,8 @@ resource "aws_lambda_function" "train_sugester" {
   function_name = "train-sugester"
   role          = module.role_creation.role_arn
   runtime = "python3.8"
-  handler = "testLambda.lambda_handler"
-  filename = "./code/testLambda.zip"
-
+  handler = "Lambda_handler.lambda_handler"
+  filename = "./code/train.zip"
 }
 
 resource "aws_cloudwatch_log_group" "function_log_group" {

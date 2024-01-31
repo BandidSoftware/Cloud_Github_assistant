@@ -38,4 +38,5 @@ module "apiGateWay" {
   metrics_lambda = module.metrics.metrics_lambda
   sugester_lambda = module.sugester.get_sugestion_lambda
   environment = var.environment
+  depends_on = [module.metrics, module.sugester]
 }
