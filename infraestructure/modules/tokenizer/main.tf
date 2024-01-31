@@ -55,9 +55,6 @@ resource "aws_lambda_function" "tokenizer" {
   handler = "TokenizerHandler.lambda_handler"
   filename = "./code/python_tokenizer.zip"
   publish = true
-  environment {
-    //Aqui pones variables de entorno mamawebo
-  }
 }
 
 resource "aws_lambda_permission" "tokenizer_allow_s3" {
@@ -73,7 +70,7 @@ resource "aws_s3_bucket_notification" "code_files_notification" {
   lambda_function {
     events = ["s3:ObjectCreated:*"]
     lambda_function_arn = aws_lambda_function.tokenizer.arn
-    filter_suffix = ".py" //Solo se activa con archivos .py
+    filter_suffix = ".json" //Solo se activa con archivos .json
   }
   depends_on = [aws_lambda_function.tokenizer]
 }

@@ -81,10 +81,6 @@ resource "aws_lambda_permission" "allow_api_invoke_get_sugestion" {
   principal     = "apigateway.amazonaws.com"
 }
 
-output "train_sugester_lambda" {
-  value = aws_lambda_function.train_sugester.invoke_arn
-}
-
 output "get_sugestion_lambda" {
   value = aws_lambda_function.get_sugestion.invoke_arn
 }
