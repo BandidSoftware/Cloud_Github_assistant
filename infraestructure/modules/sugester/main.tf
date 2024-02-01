@@ -4,10 +4,13 @@ variable "environment" {
 
 variable "eventBus_arn" {}
 
+resource "aws_s3_bucket" "models_bucket" {}
+
 module "role_creation" {
   source = "./role_creation"
   environment = var.environment
   eventBus_arn = var.eventBus_arn
+  models_bucket_arn = aws_s3_bucket.models_bucket.arn
 }
 
 resource "aws_lambda_function" "train_sugester" {
