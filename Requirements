@@ -1,0 +1,22 @@
+Recomendador de palabras para codigo. Pero nombres de variables, clases y funciones.
+
+MVP
+Hacer cloudBuilder con la infraestructura
+Bucket  gitradar-artifacts Almacenamiento de compilados
+Bucket gitradar-code-files Almacenamiento de codigo descargado
+Bucket gitradar-datalake datalake con todos los eventos
+
+Bus de eventos gitradar-bus
+(Con su regla/target)
+EventNewCodeFile ->  Lambda tokenizer -> EventToken -> DbTokenizer (DataMart)
+
+TokenQuery  <- ApiGateWay <-Lambda
+Lo que te da   <- Contenedor webservice (a elegir)
+las predicciones <- LoadBalancer
+-------------------------------------------------------------------------------------------------------------------------
+Metricas y estadisticas con el codigo
+Lamba code metrics -> CodeMetricsEvent -> DataBase
+- Lineas  totales
+- Lineas por funcion
+- Lineas por Clase
+
