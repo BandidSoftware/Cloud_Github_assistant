@@ -4,7 +4,9 @@ variable "environment" {
 
 variable "eventBus_arn" {}
 
-resource "aws_s3_bucket" "models_bucket" {}
+resource "aws_s3_bucket" "models_bucket" {
+  bucket = "models-bucket"
+}
 
 module "role_creation" {
   source = "./role_creation"
