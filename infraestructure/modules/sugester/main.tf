@@ -3,6 +3,7 @@ variable "environment" {
 }
 
 variable "eventBus_arn" {}
+variable "code_files_bucket_arn" {}
 
 resource "aws_s3_bucket" "models_bucket" {
   bucket = "models-bucket"
@@ -13,6 +14,7 @@ module "role_creation" {
   environment = var.environment
   eventBus_arn = var.eventBus_arn
   models_bucket_arn = aws_s3_bucket.models_bucket.arn
+  code_files_bucket_arn = var.code_files_bucket_arn
 }
 
 resource "aws_lambda_function" "train_sugester" {

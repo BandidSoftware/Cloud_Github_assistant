@@ -31,6 +31,7 @@ module "sugester" {
   environment = var.environment
   eventBus_arn = module.EventBridge_Datalake.eventBus_arn
   depends_on = [module.EventBridge_Datalake]
+  code_files_bucket_arn = module.tokenizer.code_files_s3_arn
 }
 
 module "apiGateWay" {

@@ -4,6 +4,7 @@ variable "environment" {
 
 variable "eventBus_arn" {}
 variable "models_bucket_arn" {}
+variable "code_files_bucket_arn" {}
 
 resource "aws_iam_role" "sugester_rol" {
   name = "sugester-role"  # Nombre del rol
@@ -20,7 +21,7 @@ resource "aws_iam_role" "sugester_rol" {
       {
         Action   : ["s3:GetObject", "s3:PutObject"],
         Effect   : "Allow",
-        Resource : [var.models_bucket_arn]
+        Resource : [var.models_bucket_arn, var.code_files_bucket_arn]
       },
     ]
   })
