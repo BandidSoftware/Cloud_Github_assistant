@@ -77,8 +77,8 @@ resource "aws_lambda_function" "get_sugestion" {
   function_name = "get-sugestion"
   role          = module.role_creation.role_arn
   runtime = "python3.8"
-  handler = "testLambda.lambda_handler" //todo despliegue
-  filename = "./code/testLambda.zip"
+  handler = "Lambda_handler.lambda_handler"
+  filename = "./code/suggester.zip"
 }
 
 resource "aws_lambda_permission" "allow_api_invoke_get_sugestion" {
