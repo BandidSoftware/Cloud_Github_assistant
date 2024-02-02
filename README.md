@@ -34,3 +34,5 @@ Obtén el `apiId` con:
 ## Conclusión
 
 Git-Radar ofrece análisis y predicciones sobre código fuente. Se ha aplicado principios de desarrollo de software y se han explorado herramientas como Terraform y LocalStack. Se delinean áreas de mejora para futuras versiones.
+
+Se puede ver el papper con mas información en https://github.com/BandidSoftware/Git-Radar/blob/develop/TSCD_Trabajo.pdf
